@@ -28,7 +28,11 @@ builder.Services.AddMediatR(x =>
         x.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>());
 // Ensure we call the overload that accepts assemblies by providing
 // an explicit configuration action and the assembly to scan.
-builder.Services.AddAutoMapper(cfg => { }, typeof(Program).Assembly);
+//builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MappingProfiles>();
+});
 
 var app = builder.Build();
 
