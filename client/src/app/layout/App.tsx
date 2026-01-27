@@ -31,6 +31,22 @@ function App() {
   const handleFormClose = () => {
     setEditMode(false);// 关闭表单
   }
+  //添加或者修改Activity
+  const handleSubmitForm = (activity: Activity) => {
+    if (activity.id) {
+      setActivities(activities.map(a => a.id === activity.id ? activity : a))
+    } else {
+      const newActivity = { ...activity, id: activities.length.toString() };
+      setActivities([...activities, newActivity]);
+      setSelectedActivity(newActivity);
+    }
+    setEditMode(false);// 关闭表单
+  }
+  //删除Activity
+  const handleDeleteActivity = (id: string) => {
+    setActivities(activities.filter(a => a.id !== id));
+    if (selectedActivity?.id === id) setSelectedActivity(undefined);
+  }
 
   return (
     <Box sx={{ backgroundColor: '#eeeeee' }}>
@@ -45,6 +61,8 @@ function App() {
           editMode={editMode}
           openForm={handleFormOpen}
           closeForm={handleFormClose}
+          submitForm={handleSubmitForm}
+          deleteActivity={handleDeleteActivity}
         />
       </Container>
 
